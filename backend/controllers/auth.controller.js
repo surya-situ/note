@@ -134,3 +134,48 @@ export const verifyCreateUser = async (req, res) => {
         }
     }
 };
+
+export const signin = async ( req, res ) => {
+    const { email, password } = req.body;
+
+    try {
+        const findUser = await User.findOne({ email });
+
+        if(!findUser) {
+            return res.status(403).json({
+                status: "Failed",
+                message: "User not found"
+            })
+        };
+
+        const isPasswordValid = await bcryptjs.compare(password, findUser.password);
+
+        if(!isPasswordValid) {
+            return res.status(400).json({
+                status: "Failed",
+                message: "Invalid email id or password!"
+            })
+        };
+
+        const token = jwt.sign(
+            { id: findUser._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+        )
+
+        return res.status(200).json({
+            status: "Success",
+            message: "Signin successful",
+            token,
+            data: findUser
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            status: "Failed",
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+};
+
