@@ -179,3 +179,22 @@ export const signin = async ( req, res ) => {
     }
 };
 
+export const deleteUser = async (req, res) => {
+    const userId = req.user.id; 
+
+    try {
+        await User.findByIdAndDelete(userId);
+
+        return res.status(200).json({
+            status: "Success",
+            message: "User successfully deleted"
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            status: "Failed",
+            message: "Internal error!"
+        })
+    }
+
+};
