@@ -21,10 +21,11 @@ export const sendOtpEmail = async (to, otp) => {
             <div style="font-family: Arial, sans-serif; line-height: 1.5;">
                 <p>Dear User,</p>
                 <p>We hope this message finds you well.</p>
-                <p>Your One-Time Password (OTP) for account verification is: <strong>${otp}</strong></p>
+                <p>Your One-Time Password (OTP) for account verification
+                <p><strong style="font-size: 24px; color: blue; margin: 20px 0">${otp}</strong></p>
                 <p>Please enter this code in the required field to proceed.</p>
-                <p>Thank you for your prompt attention to this matter.</p>
-                <p>Best regards,<br>[Scribble]</p>
+                <p>If you did not request this, you can ignore this email.</p>
+                <p>Best regards,<br>Scribble team</p>
             </div>
         `
     };
